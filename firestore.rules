@@ -1,0 +1,20 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /rounds/{roundId} {
+      // Anyone with the link can read rounds
+      allow read: if true;
+
+      // Allow creating a new round (no auth required for MVP)
+      allow create: if request.resource.data.keys().hasAll(['id', 'name', 'joinCode', 'status', 'teams', 'holes', 'scorers', 'createdAt'])
+        && request.resource.data.teams.size() == 3;
+
+      // Allow updates: scorers can update holes and scorers map; status changes allowed
+      allow update: if true;
+
+      // Allow deletion by anyone (admin console or app UI)
+      allow delete: if true;
+    }
+  }
+}
