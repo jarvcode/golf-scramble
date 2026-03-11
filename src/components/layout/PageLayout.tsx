@@ -20,26 +20,26 @@ export function PageLayout({ children, title, subtitle, back, rightAction, noPad
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col max-w-lg mx-auto">
+    <div className="min-h-screen bg-forest-950 flex flex-col max-w-lg mx-auto">
       {(title || back || rightAction) && (
-        <header className="bg-white border-b border-slate-100 px-4 py-3 flex items-center gap-3 sticky top-0 z-10">
+        <header className="bg-forest-900 border-b border-gold-500/20 px-4 py-3 flex items-center gap-3 sticky top-0 z-10">
           {back && (
             <button
               onClick={handleBack}
-              className="w-9 h-9 flex items-center justify-center rounded-full hover:bg-slate-100 active:scale-95 transition-all -ml-1"
+              className="w-9 h-9 flex items-center justify-center rounded-full hover:bg-white/10 active:scale-95 transition-all -ml-1"
               aria-label="Back"
             >
-              <svg className="w-5 h-5 text-slate-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+              <svg className="w-5 h-5 text-cream/70" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
               </svg>
             </button>
           )}
           <div className="flex-1 min-w-0">
             {title && (
-              <h1 className="text-base font-semibold text-slate-900 truncate">{title}</h1>
+              <h1 className="text-base font-semibold text-cream truncate">{title}</h1>
             )}
             {subtitle && (
-              <p className="text-xs text-slate-500 truncate">{subtitle}</p>
+              <p className="text-xs text-cream/50 truncate">{subtitle}</p>
             )}
           </div>
           {rightAction && <div className="flex-shrink-0">{rightAction}</div>}

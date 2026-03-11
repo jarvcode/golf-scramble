@@ -13,9 +13,9 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       'inline-flex items-center justify-center font-semibold rounded-xl transition-all duration-150 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100 select-none';
 
     const variants = {
-      primary: 'bg-fairway-600 text-white hover:bg-fairway-700',
-      secondary: 'bg-white text-fairway-700 border-2 border-fairway-200 hover:border-fairway-300',
-      ghost: 'text-slate-500 hover:text-slate-700 hover:bg-slate-100',
+      primary: 'bg-gold-500 text-forest-950 hover:bg-gold-400',
+      secondary: 'bg-transparent text-gold-500 border-2 border-gold-500/40 hover:border-gold-500',
+      ghost: 'text-cream/50 hover:text-cream hover:bg-white/10',
       danger: 'bg-red-500 text-white hover:bg-red-600',
     };
 

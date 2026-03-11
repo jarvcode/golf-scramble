@@ -36,7 +36,7 @@ export function History() {
     return (
       <PageLayout back="/" title="Round History">
         <div className="flex-1 flex items-center justify-center">
-          <div className="w-10 h-10 border-[3px] border-fairway-500 border-t-transparent rounded-full animate-spin" />
+          <div className="w-10 h-10 border-[3px] border-gold-500 border-t-transparent rounded-full animate-spin" />
         </div>
       </PageLayout>
     );
@@ -46,14 +46,14 @@ export function History() {
     return (
       <PageLayout back="/" title="Round History">
         <div className="flex-1 flex flex-col items-center justify-center text-center px-6">
-          <div className="w-16 h-16 bg-slate-100 rounded-2xl flex items-center justify-center mb-4">
-            <svg className="w-8 h-8 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <div className="w-16 h-16 bg-forest-800 border border-gold-500/20 rounded-2xl flex items-center justify-center mb-4">
+            <svg className="w-8 h-8 text-cream/30" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5}
                 d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
             </svg>
           </div>
-          <p className="text-slate-600 font-medium mb-1">No rounds yet</p>
-          <p className="text-slate-400 text-sm mb-6">Complete rounds will appear here.</p>
+          <p className="text-cream font-medium mb-1">No rounds yet</p>
+          <p className="text-cream/40 text-sm mb-6">Completed rounds will appear here.</p>
           <Button onClick={() => navigate('/')}>Create a Round</Button>
         </div>
       </PageLayout>
@@ -79,22 +79,22 @@ export function History() {
               >
                 <div className="flex items-start justify-between gap-3 mb-3">
                   <div className="flex-1 min-w-0">
-                    <p className="font-semibold text-slate-900 truncate">{round.name}</p>
+                    <p className="font-semibold text-cream truncate">{round.name}</p>
                     {round.courseName && (
-                      <p className="text-sm text-slate-500 truncate">{round.courseName}</p>
+                      <p className="text-sm text-cream/40 truncate">{round.courseName}</p>
                     )}
                   </div>
                   <div className="flex flex-col items-end gap-1 flex-shrink-0">
                     <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${
                       isActive
-                        ? 'bg-amber-100 text-amber-700'
+                        ? 'bg-gold-500/20 text-gold-400'
                         : round.status === 'completed'
-                        ? 'bg-fairway-100 text-fairway-700'
-                        : 'bg-slate-100 text-slate-500'
+                        ? 'bg-green-500/20 text-green-400'
+                        : 'bg-white/10 text-cream/50'
                     }`}>
                       {isActive ? 'In Progress' : round.status === 'completed' ? 'Completed' : 'Setup'}
                     </span>
-                    <span className="text-xs text-slate-400">{formatDate(round.createdAt)}</span>
+                    <span className="text-xs text-cream/30">{formatDate(round.createdAt)}</span>
                   </div>
                 </div>
 
@@ -105,14 +105,14 @@ export function History() {
                       const color = getTeamColor(row.team.color);
                       return (
                         <div key={row.team.id} className="flex items-center gap-2">
-                          <span className="text-xs text-slate-400 w-4 text-center">{i + 1}</span>
+                          <span className="text-xs text-cream/30 w-4 text-center">{i + 1}</span>
                           <div className={`w-2.5 h-2.5 rounded-full ${color.dot}`} />
-                          <span className="text-sm text-slate-700 flex-1">{row.team.name}</span>
+                          <span className="text-sm text-cream/70 flex-1">{row.team.name}</span>
                           {row.holesPlayed > 0 && (
                             <>
-                              <span className="text-sm font-semibold text-slate-900">{row.totalScore}</span>
+                              <span className="text-sm font-semibold text-cream">{row.totalScore}</span>
                               <span className={`text-xs font-medium w-8 text-right ${
-                                row.toPar < 0 ? 'text-fairway-600' : row.toPar > 0 ? 'text-red-500' : 'text-slate-500'
+                                row.toPar < 0 ? 'text-fairway-400' : row.toPar > 0 ? 'text-red-400' : 'text-cream/40'
                               }`}>
                                 {formatToPar(row.toPar)}
                               </span>
@@ -126,22 +126,22 @@ export function History() {
               </button>
 
               {/* Actions */}
-              <div className="px-4 pb-3 flex gap-2 border-t border-slate-50 pt-3">
+              <div className="px-4 pb-3 flex gap-2 border-t border-gold-500/10 pt-3">
                 <button
                   onClick={() => {
                     if (round.status === 'completed') navigate(`/round/${round.id}/summary`);
                     else navigate(`/round/${round.id}`);
                   }}
-                  className="flex-1 text-sm text-fairway-600 font-medium py-2 rounded-lg bg-fairway-50
-                             active:scale-95 transition-all"
+                  className="flex-1 text-sm text-gold-400 font-medium py-2 rounded-lg bg-gold-500/10
+                             active:scale-95 transition-all border border-gold-500/20"
                 >
                   {round.status === 'completed' ? 'View Summary' : 'Continue Round'}
                 </button>
                 <button
                   onClick={() => handleDelete(round)}
                   disabled={isDeleting}
-                  className="px-3 py-2 text-sm text-red-500 rounded-lg bg-red-50 active:scale-95
-                             transition-all disabled:opacity-50"
+                  className="px-3 py-2 text-sm text-red-400 rounded-lg bg-red-500/10 border border-red-500/20
+                             active:scale-95 transition-all disabled:opacity-50"
                 >
                   {isDeleting ? '…' : 'Delete'}
                 </button>

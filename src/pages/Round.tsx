@@ -84,7 +84,7 @@ export function Round() {
     return (
       <PageLayout>
         <div className="flex-1 flex items-center justify-center">
-          <div className="w-10 h-10 border-[3px] border-fairway-500 border-t-transparent rounded-full animate-spin" />
+          <div className="w-10 h-10 border-[3px] border-gold-500 border-t-transparent rounded-full animate-spin" />
         </div>
       </PageLayout>
     );
@@ -93,7 +93,7 @@ export function Round() {
   if (error || !round) {
     return (
       <PageLayout back="/" title="Error">
-        <p className="text-slate-600">{error ?? 'Round not found.'}</p>
+        <p className="text-cream/60">{error ?? 'Round not found.'}</p>
         <Button onClick={() => navigate('/')}>Go Home</Button>
       </PageLayout>
     );
@@ -103,7 +103,7 @@ export function Round() {
     return (
       <PageLayout title={round.name} back="/">
         <div className="card p-5 text-center">
-          <p className="text-slate-600 mb-4">You haven't joined this round as a scorer.</p>
+          <p className="text-cream/60 mb-4">You haven't joined this round as a scorer.</p>
           <Button onClick={() => navigate(`/join/${roundId}`)}>Join Round</Button>
         </div>
       </PageLayout>
@@ -113,15 +113,15 @@ export function Round() {
   return (
     <PageLayout noPadding title={round.name} subtitle={round.courseName || undefined}>
       {/* ── Tab bar ──────────────────────────────────────────────────────────── */}
-      <div className="bg-white border-b border-slate-100 flex">
+      <div className="bg-forest-900 border-b border-gold-500/20 flex">
         {(['score', 'leaderboard'] as Tab[]).map((t) => (
           <button
             key={t}
             onClick={() => setTab(t)}
             className={`flex-1 py-3 text-sm font-semibold capitalize transition-colors ${
               tab === t
-                ? 'text-fairway-700 border-b-2 border-fairway-600'
-                : 'text-slate-500'
+                ? 'text-gold-400 border-b-2 border-gold-500'
+                : 'text-cream/40'
             }`}
           >
             {t === 'score' ? 'Score Entry' : 'Leaderboard'}
@@ -181,12 +181,12 @@ function ScoreTab({
       {/* Current hole info */}
       <div className="flex items-center justify-between px-1">
         <div>
-          <span className="text-2xl font-bold text-slate-900">Hole {currentHole}</span>
-          <span className="ml-3 text-base text-slate-500">Par {hole.par}</span>
+          <span className="text-2xl font-bold text-cream">Hole {currentHole}</span>
+          <span className="ml-3 text-base text-cream/50">Par {hole.par}</span>
         </div>
         {saving && (
-          <span className="text-xs text-slate-400 flex items-center gap-1.5">
-            <div className="w-3 h-3 border-2 border-slate-300 border-t-fairway-500 rounded-full animate-spin" />
+          <span className="text-xs text-cream/40 flex items-center gap-1.5">
+            <div className="w-3 h-3 border-2 border-cream/20 border-t-gold-500 rounded-full animate-spin" />
             Saving…
           </span>
         )}
@@ -204,22 +204,22 @@ function ScoreTab({
         return (
           <div
             key={team.id}
-            className={`card overflow-hidden ${isMyTeam ? `ring-2 ring-fairway-500` : ''}`}
+            className={`card overflow-hidden ${isMyTeam ? 'ring-2 ring-gold-500/60' : ''}`}
           >
             {/* Team header */}
-            <div className={`px-4 py-3 flex items-center gap-2 border-b border-slate-100 ${isMyTeam ? color.bg : ''}`}>
+            <div className={`px-4 py-3 flex items-center gap-2 border-b border-gold-500/15 ${isMyTeam ? 'bg-gold-500/10' : ''}`}>
               <div className={`w-3 h-3 rounded-full ${color.dot}`} />
-              <span className={`font-semibold text-sm flex-1 ${isMyTeam ? color.text : 'text-slate-700'}`}>
+              <span className={`font-semibold text-sm flex-1 ${isMyTeam ? 'text-gold-400' : 'text-cream/70'}`}>
                 {team.name}
               </span>
               {isMyTeam && (
-                <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${color.bg} ${color.text} border ${color.border}`}>
+                <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-gold-500/20 text-gold-400 border border-gold-500/30">
                   Your Team
                 </span>
               )}
               {!isMyTeam && score != null && (
                 <span className={`text-sm font-semibold ${
-                  toPar! < 0 ? 'text-fairway-600' : toPar! > 0 ? 'text-red-500' : 'text-slate-600'
+                  toPar! < 0 ? 'text-fairway-400' : toPar! > 0 ? 'text-red-400' : 'text-cream/50'
                 }`}>
                   {formatToPar(toPar!)}
                 </span>
@@ -232,7 +232,7 @@ function ScoreTab({
                 <div className="flex items-end gap-4">
                   {/* Score */}
                   <div className="flex flex-col gap-1.5">
-                    <label className="text-xs font-medium text-slate-500">Score</label>
+                    <label className="text-xs font-medium text-cream/40">Score</label>
                     <ScoreInputWidget
                       value={score}
                       par={hole.par}
@@ -244,7 +244,7 @@ function ScoreTab({
                   {toPar != null && (
                     <div className="pb-2">
                       <span className={`text-xl font-bold ${
-                        toPar < 0 ? 'text-fairway-600' : toPar > 0 ? 'text-red-500' : 'text-slate-500'
+                        toPar < 0 ? 'text-fairway-400' : toPar > 0 ? 'text-red-400' : 'text-cream/50'
                       }`}>
                         {formatToPar(toPar)}
                       </span>
@@ -253,7 +253,7 @@ function ScoreTab({
 
                   {/* Shotguns */}
                   <div className="flex flex-col gap-1.5 ml-auto">
-                    <label className="text-xs font-medium text-slate-500">Shotguns</label>
+                    <label className="text-xs font-medium text-cream/40">Shotguns</label>
                     <ShotgunPicker
                       value={shotguns}
                       onChange={(v) => onShotgunChange(team.id, v)}
@@ -264,20 +264,20 @@ function ScoreTab({
                 // Read-only view for other teams
                 <div className="flex items-center gap-4">
                   <div className="flex flex-col">
-                    <span className="text-xs text-slate-400 mb-0.5">Score</span>
-                    <span className="text-2xl font-bold text-slate-700">
+                    <span className="text-xs text-cream/40 mb-0.5">Score</span>
+                    <span className="text-2xl font-bold text-cream/70">
                       {score ?? '—'}
                     </span>
                   </div>
                   {toPar != null && (
                     <span className={`text-base font-semibold mt-auto mb-0.5 ${
-                      toPar < 0 ? 'text-fairway-600' : toPar > 0 ? 'text-red-500' : 'text-slate-500'
+                      toPar < 0 ? 'text-fairway-400' : toPar > 0 ? 'text-red-400' : 'text-cream/40'
                     }`}>
                       {formatToPar(toPar)}
                     </span>
                   )}
                   {shotguns > 0 && (
-                    <div className="ml-auto flex items-center gap-1 text-amber-600">
+                    <div className="ml-auto flex items-center gap-1 text-gold-400">
                       <span className="text-base">💥</span>
                       <span className="text-sm font-semibold">{shotguns}</span>
                     </div>
@@ -291,7 +291,7 @@ function ScoreTab({
 
       {/* Hole quick scroll */}
       <div className="card p-3">
-        <p className="text-xs font-medium text-slate-400 mb-2.5">Jump to hole</p>
+        <p className="text-xs font-medium text-cream/40 mb-2.5">Jump to hole</p>
         <div className="grid grid-cols-9 gap-1.5">
           {round.holes.map((h, i) => {
             const myScore = h.scores[myTeamId];
@@ -304,10 +304,10 @@ function ScoreTab({
                 onClick={() => onHoleChange(i + 1)}
                 className={`h-8 rounded-lg text-xs font-semibold transition-all active:scale-90 ${
                   isCurrent
-                    ? 'bg-fairway-600 text-white'
+                    ? 'bg-gold-500 text-forest-950'
                     : done
-                    ? 'bg-fairway-100 text-fairway-700'
-                    : 'bg-slate-100 text-slate-500'
+                    ? 'bg-gold-500/20 text-gold-400'
+                    : 'bg-forest-950 text-cream/40 border border-gold-500/15'
                 }`}
               >
                 {i + 1}
@@ -349,20 +349,20 @@ function HoleNav({
   const next = () => onChange(Math.min(18, currentHole + 1));
 
   return (
-    <div className="flex items-center gap-3 bg-white rounded-2xl p-3 border border-slate-100">
+    <div className="flex items-center gap-3 bg-forest-800 rounded-2xl p-3 border border-gold-500/20">
       <button
         onClick={prev}
         disabled={currentHole === 1}
-        className="w-11 h-11 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-center
-                   active:scale-95 transition-all disabled:opacity-40 disabled:cursor-not-allowed"
+        className="w-11 h-11 rounded-xl bg-forest-950 border border-gold-500/20 flex items-center justify-center
+                   active:scale-95 transition-all disabled:opacity-30 disabled:cursor-not-allowed"
       >
-        <svg className="w-4 h-4 text-slate-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+        <svg className="w-4 h-4 text-cream/60" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
           <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
         </svg>
       </button>
 
       <div className="flex-1 text-center">
-        <p className="text-xs text-slate-400 mb-0.5">
+        <p className="text-xs text-cream/40 mb-0.5">
           {currentHole <= 9 ? 'Front 9' : 'Back 9'}
         </p>
         {/* Progress dots */}
@@ -374,13 +374,13 @@ function HoleNav({
               <div
                 key={i}
                 className={`rounded-full transition-all ${
-                  isCurrent ? 'w-4 h-2.5 bg-fairway-600' : done ? 'w-2 h-2 bg-fairway-300' : 'w-2 h-2 bg-slate-200'
+                  isCurrent ? 'w-4 h-2.5 bg-gold-500' : done ? 'w-2 h-2 bg-gold-500/40' : 'w-2 h-2 bg-white/15'
                 }`}
               />
             );
           })}
         </div>
-        <p className="text-xs text-slate-400 mt-0.5">
+        <p className="text-xs text-cream/40 mt-0.5">
           {holes.filter((h) => h.scores[myTeamId]?.score != null).length}/18 scored
         </p>
       </div>
@@ -388,10 +388,10 @@ function HoleNav({
       <button
         onClick={next}
         disabled={currentHole === 18}
-        className="w-11 h-11 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-center
-                   active:scale-95 transition-all disabled:opacity-40 disabled:cursor-not-allowed"
+        className="w-11 h-11 rounded-xl bg-forest-950 border border-gold-500/20 flex items-center justify-center
+                   active:scale-95 transition-all disabled:opacity-30 disabled:cursor-not-allowed"
       >
-        <svg className="w-4 h-4 text-slate-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+        <svg className="w-4 h-4 text-cream/60" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
           <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
         </svg>
       </button>
@@ -417,8 +417,8 @@ function ScoreInputWidget({
     <div className="flex items-center gap-1">
       <button
         onClick={dec}
-        className="w-10 h-14 rounded-lg bg-slate-100 active:bg-slate-200 active:scale-95 transition-all
-                   flex items-center justify-center text-xl text-slate-600 font-light"
+        className="w-10 h-14 rounded-lg bg-forest-950 border border-gold-500/20 active:bg-forest-700 active:scale-95 transition-all
+                   flex items-center justify-center text-xl text-cream/60 font-light"
       >
         −
       </button>
@@ -432,14 +432,14 @@ function ScoreInputWidget({
         placeholder={String(par)}
         min={1}
         max={20}
-        className="w-14 h-14 rounded-xl border-2 border-slate-200 text-center text-2xl font-bold
-                   text-slate-900 bg-white focus:outline-none focus:border-fairway-500
-                   transition-colors"
+        className="w-14 h-14 rounded-xl border-2 border-gold-500/30 text-center text-2xl font-bold
+                   text-cream bg-forest-950 focus:outline-none focus:border-gold-500
+                   transition-colors placeholder-cream/20"
       />
       <button
         onClick={inc}
-        className="w-10 h-14 rounded-lg bg-slate-100 active:bg-slate-200 active:scale-95 transition-all
-                   flex items-center justify-center text-xl text-slate-600"
+        className="w-10 h-14 rounded-lg bg-forest-950 border border-gold-500/20 active:bg-forest-700 active:scale-95 transition-all
+                   flex items-center justify-center text-xl text-cream/60"
       >
         +
       </button>
@@ -464,8 +464,8 @@ function ShotgunPicker({
           onClick={() => onChange(v)}
           className={`w-10 h-14 rounded-xl text-sm font-bold transition-all active:scale-95 border-2 ${
             value === v
-              ? 'bg-amber-500 border-amber-500 text-white'
-              : 'bg-white border-slate-200 text-slate-600'
+              ? 'bg-gold-500 border-gold-500 text-forest-950'
+              : 'bg-forest-950 border-gold-500/20 text-cream/50'
           }`}
         >
           {v === 0 ? '—' : `💥${v}`}
@@ -485,20 +485,20 @@ function LeaderboardTab({ round }: { round: RoundType }) {
     <div className="flex-1 flex flex-col p-4 gap-4 overflow-auto pb-6">
       {/* Live badge */}
       <div className="flex items-center gap-2">
-        <div className="w-2 h-2 bg-fairway-500 rounded-full animate-pulse" />
-        <span className="text-xs text-fairway-600 font-medium">Live</span>
-        <span className="text-xs text-slate-400">· Updates automatically</span>
+        <div className="w-2 h-2 bg-gold-400 rounded-full animate-pulse" />
+        <span className="text-xs text-gold-400 font-medium">Live</span>
+        <span className="text-xs text-cream/30">· Updates automatically</span>
       </div>
 
       {/* Leaderboard table */}
       <div className="card overflow-hidden">
         {/* Header */}
-        <div className="grid grid-cols-[auto_1fr_auto_auto_auto] gap-x-3 px-4 py-2.5 bg-slate-50 border-b border-slate-100">
-          <span className="text-xs font-semibold text-slate-400 w-5 text-center">#</span>
-          <span className="text-xs font-semibold text-slate-400">Team</span>
-          <span className="text-xs font-semibold text-slate-400 text-right">Score</span>
-          <span className="text-xs font-semibold text-slate-400 text-right w-10">To Par</span>
-          <span className="text-xs font-semibold text-slate-400 text-right w-8">💥</span>
+        <div className="grid grid-cols-[auto_1fr_auto_auto_auto] gap-x-3 px-4 py-2.5 bg-forest-950/50 border-b border-gold-500/15">
+          <span className="text-xs font-semibold text-cream/40 w-5 text-center">#</span>
+          <span className="text-xs font-semibold text-cream/40">Team</span>
+          <span className="text-xs font-semibold text-cream/40 text-right">Score</span>
+          <span className="text-xs font-semibold text-cream/40 text-right w-10">To Par</span>
+          <span className="text-xs font-semibold text-cream/40 text-right w-8">💥</span>
         </div>
 
         {rows.map((row, i) => {
@@ -508,32 +508,32 @@ function LeaderboardTab({ round }: { round: RoundType }) {
           return (
             <div
               key={row.team.id}
-              className={`grid grid-cols-[auto_1fr_auto_auto_auto] gap-x-3 px-4 py-4 border-b border-slate-50 last:border-0 items-center ${
-                isLeader ? 'bg-fairway-50' : ''
+              className={`grid grid-cols-[auto_1fr_auto_auto_auto] gap-x-3 px-4 py-4 border-b border-gold-500/10 last:border-0 items-center ${
+                isLeader ? 'bg-gold-500/8' : ''
               }`}
             >
-              <span className={`text-sm font-bold w-5 text-center ${isLeader ? 'text-fairway-700' : 'text-slate-400'}`}>
+              <span className={`text-sm font-bold w-5 text-center ${isLeader ? 'text-gold-400' : 'text-cream/30'}`}>
                 {row.holesPlayed > 0 ? i + 1 : '—'}
               </span>
               <div className="min-w-0 flex items-center gap-2">
                 <div className={`w-3 h-3 rounded-full ${color.dot} flex-shrink-0`} />
                 <div className="min-w-0">
-                  <p className="font-semibold text-slate-900 text-sm truncate">{row.team.name}</p>
-                  <p className="text-xs text-slate-400">{row.holesPlayed}/18 holes</p>
+                  <p className="font-semibold text-cream text-sm truncate">{row.team.name}</p>
+                  <p className="text-xs text-cream/30">{row.holesPlayed}/18 holes</p>
                 </div>
               </div>
-              <span className="text-base font-bold text-slate-900 text-right">
+              <span className="text-base font-bold text-cream text-right">
                 {row.holesPlayed > 0 ? row.totalScore : '—'}
               </span>
               <span className={`text-sm font-semibold text-right w-10 ${
-                row.holesPlayed === 0 ? 'text-slate-300' :
-                row.toPar < 0 ? 'text-fairway-600' :
-                row.toPar > 0 ? 'text-red-500' :
-                'text-slate-500'
+                row.holesPlayed === 0 ? 'text-cream/20' :
+                row.toPar < 0 ? 'text-fairway-400' :
+                row.toPar > 0 ? 'text-red-400' :
+                'text-cream/40'
               }`}>
                 {row.holesPlayed > 0 ? formatToPar(row.toPar) : '—'}
               </span>
-              <span className="text-sm text-slate-600 text-right w-8 font-medium">
+              <span className="text-sm text-cream/50 text-right w-8 font-medium">
                 {row.totalShotguns > 0 ? row.totalShotguns : '—'}
               </span>
             </div>
@@ -543,34 +543,34 @@ function LeaderboardTab({ round }: { round: RoundType }) {
 
       {/* Running totals by nine */}
       <div className="card p-4">
-        <p className="text-xs font-semibold text-slate-400 uppercase tracking-wide mb-3">
+        <p className="text-xs font-semibold text-cream/40 uppercase tracking-wide mb-3">
           9-Hole Splits
         </p>
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
-              <tr className="text-xs text-slate-400 border-b border-slate-100">
+              <tr className="text-xs text-cream/40 border-b border-gold-500/15">
                 <th className="text-left pb-2 font-medium">Team</th>
                 <th className="text-right pb-2 font-medium">Front 9</th>
                 <th className="text-right pb-2 font-medium">Back 9</th>
                 <th className="text-right pb-2 font-medium">Total</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-50">
+            <tbody className="divide-y divide-gold-500/10">
               {rows.map((row) => (
                 <tr key={row.team.id}>
                   <td className="py-2.5">
                     <div className="flex items-center gap-1.5">
                       <div className={`w-2.5 h-2.5 rounded-full ${getTeamColor(row.team.color).dot}`} />
-                      <span className="font-medium text-slate-800">{row.team.name}</span>
+                      <span className="font-medium text-cream/80">{row.team.name}</span>
                     </div>
                   </td>
-                  <td className="text-right py-2.5 text-slate-700 font-medium">{row.front9 || '—'}</td>
-                  <td className="text-right py-2.5 text-slate-700 font-medium">{row.back9 || '—'}</td>
-                  <td className="text-right py-2.5 font-bold text-slate-900">{row.totalScore || '—'}</td>
+                  <td className="text-right py-2.5 text-cream/60 font-medium">{row.front9 || '—'}</td>
+                  <td className="text-right py-2.5 text-cream/60 font-medium">{row.back9 || '—'}</td>
+                  <td className="text-right py-2.5 font-bold text-cream">{row.totalScore || '—'}</td>
                 </tr>
               ))}
-              <tr className="text-xs text-slate-400">
+              <tr className="text-xs text-cream/30">
                 <td className="pt-2">Par</td>
                 <td className="text-right pt-2">{round.holes.slice(0, 9).reduce((s, h) => s + h.par, 0)}</td>
                 <td className="text-right pt-2">{round.holes.slice(9).reduce((s, h) => s + h.par, 0)}</td>

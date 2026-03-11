@@ -61,7 +61,7 @@ export function Lobby() {
     return (
       <PageLayout>
         <div className="flex-1 flex items-center justify-center">
-          <div className="w-10 h-10 border-[3px] border-fairway-500 border-t-transparent rounded-full animate-spin" />
+          <div className="w-10 h-10 border-[3px] border-gold-500 border-t-transparent rounded-full animate-spin" />
         </div>
       </PageLayout>
     );
@@ -70,7 +70,7 @@ export function Lobby() {
   if (!round || error) {
     return (
       <PageLayout back="/" title="Error">
-        <p className="text-slate-600">{error ?? 'Round not found.'}</p>
+        <p className="text-cream/60">{error ?? 'Round not found.'}</p>
       </PageLayout>
     );
   }
@@ -85,23 +85,25 @@ export function Lobby() {
       subtitle={round.courseName || 'Golf Scramble'}
     >
       {/* Join code card */}
-      <div className="bg-fairway-700 rounded-2xl p-5 text-center">
-        <p className="text-fairway-200 text-sm mb-2">Share this code to join</p>
-        <p className="text-4xl font-bold tracking-[0.4em] text-white mb-4">
+      <div className="rounded-2xl p-5 text-center border border-gold-500/40"
+        style={{ background: 'linear-gradient(135deg, #1A3828 0%, #122B1E 100%)' }}
+      >
+        <p className="text-cream/50 text-sm mb-2">Share this code to join</p>
+        <p className="font-display text-5xl tracking-[0.4em] text-gold-400 mb-4">
           {round.joinCode}
         </p>
         <div className="flex gap-2">
           <button
             onClick={copyCode}
-            className="flex-1 bg-white/15 text-white text-sm font-medium py-2.5 rounded-xl
-                       active:scale-95 transition-all border border-white/20"
+            className="flex-1 bg-gold-500/15 text-gold-400 text-sm font-medium py-2.5 rounded-xl
+                       active:scale-95 transition-all border border-gold-500/30"
           >
             {copied ? 'Copied!' : 'Copy Code'}
           </button>
           <button
             onClick={copyLink}
-            className="flex-1 bg-white/15 text-white text-sm font-medium py-2.5 rounded-xl
-                       active:scale-95 transition-all border border-white/20"
+            className="flex-1 bg-gold-500/15 text-gold-400 text-sm font-medium py-2.5 rounded-xl
+                       active:scale-95 transition-all border border-gold-500/30"
           >
             Copy Link
           </button>
@@ -110,15 +112,17 @@ export function Lobby() {
 
       {/* Team status */}
       <div className="card">
-        <div className="px-4 py-3 border-b border-slate-100 flex items-center justify-between">
-          <p className="text-sm font-semibold text-slate-700">Teams</p>
+        <div className="px-4 py-3 border-b border-gold-500/15 flex items-center justify-between">
+          <p className="text-sm font-semibold text-cream/70">Teams</p>
           <span className={`text-xs font-medium px-2.5 py-1 rounded-full ${
-            allJoined ? 'bg-fairway-100 text-fairway-700' : 'bg-amber-100 text-amber-700'
+            allJoined
+              ? 'bg-green-500/20 text-green-400'
+              : 'bg-gold-500/20 text-gold-400'
           }`}>
             {scorerCount}/3 joined
           </span>
         </div>
-        <div className="divide-y divide-slate-100">
+        <div className="divide-y divide-gold-500/10">
           {round.teams.map((team) => {
             const color = getTeamColor(team.color);
             const hasScorer = !!round.scorers[team.id];
@@ -128,22 +132,22 @@ export function Lobby() {
               <div key={team.id} className="flex items-center gap-3 px-4 py-3.5">
                 <div className={`w-3.5 h-3.5 rounded-full ${color.dot} flex-shrink-0`} />
                 <div className="flex-1 min-w-0">
-                  <p className="font-semibold text-slate-900 text-sm">
+                  <p className="font-semibold text-cream text-sm">
                     {team.name}
                     {isMyTeam && (
-                      <span className="ml-2 text-xs font-medium text-fairway-600 bg-fairway-50 px-1.5 py-0.5 rounded">
+                      <span className="ml-2 text-xs font-medium text-gold-400 bg-gold-500/15 px-1.5 py-0.5 rounded">
                         You
                       </span>
                     )}
                   </p>
-                  <p className="text-xs text-slate-500 truncate">
+                  <p className="text-xs text-cream/40 truncate">
                     {team.players.filter((p) => p.trim()).join(' · ') || 'No players'}
                   </p>
                 </div>
                 <div className={`flex items-center gap-1.5 text-xs font-medium ${
-                  hasScorer ? 'text-fairway-600' : 'text-slate-400'
+                  hasScorer ? 'text-green-400' : 'text-cream/30'
                 }`}>
-                  <div className={`w-2 h-2 rounded-full ${hasScorer ? 'bg-fairway-500' : 'bg-slate-300'}`} />
+                  <div className={`w-2 h-2 rounded-full ${hasScorer ? 'bg-green-400' : 'bg-cream/20'}`} />
                   {hasScorer ? 'Ready' : 'Waiting…'}
                 </div>
               </div>
@@ -154,8 +158,8 @@ export function Lobby() {
 
       {/* Info */}
       {!isCreator && (
-        <div className="bg-amber-50 border border-amber-200 rounded-xl px-4 py-3">
-          <p className="text-sm text-amber-700">
+        <div className="bg-gold-500/10 border border-gold-500/25 rounded-xl px-4 py-3">
+          <p className="text-sm text-gold-400/80">
             Waiting for the round organizer to start play.
           </p>
         </div>
@@ -165,7 +169,7 @@ export function Lobby() {
       {isCreator && (
         <div className="flex flex-col gap-3">
           {!allJoined && (
-            <p className="text-sm text-center text-slate-500">
+            <p className="text-sm text-center text-cream/40">
               All 3 teams can join before starting, or start now.
             </p>
           )}

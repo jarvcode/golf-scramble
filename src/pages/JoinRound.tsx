@@ -45,8 +45,8 @@ export function JoinRound() {
       <PageLayout back="/">
         <div className="flex-1 flex items-center justify-center">
           <div className="text-center">
-            <div className="w-10 h-10 border-3 border-fairway-500 border-t-transparent rounded-full animate-spin mx-auto mb-3" />
-            <p className="text-slate-500 text-sm">Loading round…</p>
+            <div className="w-10 h-10 border-[3px] border-gold-500 border-t-transparent rounded-full animate-spin mx-auto mb-3" />
+            <p className="text-cream/40 text-sm">Loading round…</p>
           </div>
         </div>
       </PageLayout>
@@ -57,7 +57,7 @@ export function JoinRound() {
     return (
       <PageLayout back="/" title="Round Not Found">
         <div className="card p-6 text-center">
-          <p className="text-slate-600 mb-4">
+          <p className="text-cream/60 mb-4">
             {error ?? 'This round does not exist or may have been deleted.'}
           </p>
           <Button onClick={() => navigate('/')}>Go Home</Button>
@@ -74,11 +74,11 @@ export function JoinRound() {
     >
       <div className="flex flex-col gap-4">
         <div className="card p-4">
-          <p className="text-sm text-slate-600 mb-1">Join Code</p>
-          <p className="text-2xl font-bold tracking-[0.3em] text-slate-900">{round.joinCode}</p>
+          <p className="text-sm text-cream/50 mb-1">Join Code</p>
+          <p className="font-display text-3xl tracking-[0.3em] text-gold-400">{round.joinCode}</p>
         </div>
 
-        <p className="text-sm font-medium text-slate-500 px-1">
+        <p className="text-sm font-medium text-cream/50 px-1">
           Which team are you scoring for?
         </p>
 
@@ -95,27 +95,27 @@ export function JoinRound() {
                 disabled={alreadyClaimed || undefined}
                 className={`card p-4 text-left transition-all active:scale-[0.98] ${
                   isSelected
-                    ? `ring-2 ring-fairway-500 ${color.bg}`
+                    ? 'ring-2 ring-gold-500 border-gold-500/40'
                     : alreadyClaimed
-                    ? 'opacity-50 cursor-not-allowed'
-                    : 'hover:border-slate-200'
+                    ? 'opacity-40 cursor-not-allowed'
+                    : 'hover:border-gold-500/30'
                 }`}
               >
                 <div className="flex items-center gap-3">
                   <div className={`w-4 h-4 rounded-full ${color.dot} flex-shrink-0`} />
                   <div className="flex-1">
-                    <p className="font-semibold text-slate-900">{team.name}</p>
-                    <p className="text-xs text-slate-500 mt-0.5">
+                    <p className="font-semibold text-cream">{team.name}</p>
+                    <p className="text-xs text-cream/40 mt-0.5">
                       {team.players.filter((p) => p.trim()).join(', ') || 'No players listed'}
                     </p>
                   </div>
                   {alreadyClaimed && (
-                    <span className="text-xs text-slate-400 bg-slate-100 px-2 py-1 rounded-full">
+                    <span className="text-xs text-cream/30 bg-white/10 px-2 py-1 rounded-full">
                       Taken
                     </span>
                   )}
                   {isSelected && (
-                    <svg className="w-5 h-5 text-fairway-600" fill="currentColor" viewBox="0 0 20 20">
+                    <svg className="w-5 h-5 text-gold-400" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                     </svg>
                   )}
