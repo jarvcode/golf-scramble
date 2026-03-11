@@ -35,15 +35,16 @@ export function Round() {
   const holeIndex = currentHole - 1;
   const hole = round?.holes[holeIndex];
 
-  // Debounced score save
+  // Debounced score save — pass full holes array to avoid Firestore array→map bug
   const saveScore = useCallback(
     (holeIdx: number, teamId: string, field: 'score' | 'shotguns', value: number | null) => {
-      if (!roundId) return;
+      if (!roundId || !round) return;
+      const currentHoles = round.holes;
       if (saveTimeout.current) clearTimeout(saveTimeout.current);
       saveTimeout.current = setTimeout(async () => {
         setSaving(true);
         try {
-          await updateHoleScore(roundId, holeIdx, teamId, { [field]: value });
+          await updateHoleScore(roundId, currentHoles, holeIdx, teamId, { [field]: value });
         } catch (e) {
           console.error('Save error:', e);
         } finally {
@@ -51,7 +52,7 @@ export function Round() {
         }
       }, 400);
     },
-    [roundId, updateHoleScore],
+    [roundId, round, updateHoleScore],
   );
 
   const handleScoreChange = (teamId: string, rawValue: string) => {

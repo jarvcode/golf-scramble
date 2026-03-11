@@ -12,8 +12,22 @@ import {
   orderBy,
   withTimeout,
 } from '../lib/firebase';
-import type { Round, HoleScore } from '../types';
+import type { Round, Hole, HoleScore } from '../types';
 import { buildInitialHoles, roundToDoc, getDeviceId } from '../lib/utils';
+
+/**
+ * Firestore converts arrays to maps when you update individual elements via
+ * dot-notation field paths (e.g. holes.0.scores.team0.shotguns). This normalizes
+ * the data back to an array every time we read from Firestore.
+ */
+function normalizeRound(data: Record<string, unknown>): Round {
+  const round = data as unknown as Round;
+  if (round.holes && !Array.isArray(round.holes)) {
+    round.holes = Object.values(round.holes as Record<string, Hole>)
+      .sort((a, b) => a.number - b.number);
+  }
+  return round;
+}
 
 // ─── Single round subscription ────────────────────────────────────────────────
 
@@ -36,7 +50,7 @@ export function useRound(roundId: string | undefined) {
       roundRef,
       (snap) => {
         if (snap.exists()) {
-          setRound(snap.data() as Round);
+          setRound(normalizeRound(snap.data()));
         } else {
           setRound(null);
           setError('Round not found.');
@@ -65,7 +79,7 @@ export function useRoundHistory() {
   useEffect(() => {
     const q = query(collection(db, 'rounds'), orderBy('createdAt', 'desc'));
     const unsub = onSnapshot(q, (snap) => {
-      setRounds(snap.docs.map((d) => d.data() as Round));
+      setRounds(snap.docs.map((d) => normalizeRound(d.data())));
       setLoading(false);
     });
     return () => unsub();
@@ -112,18 +126,31 @@ export function useRoundActions() {
     [deviceId],
   );
 
-  /** Update a single hole's score for one team */
+  /**
+   * Update a single hole's score for one team.
+   * Accepts the full current holes array to avoid Firestore's array→map
+   * conversion that happens with dot-notation field path updates.
+   */
   const updateHoleScore = useCallback(
-    async (roundId: string, holeIndex: number, teamId: string, score: Partial<HoleScore>) => {
+    async (
+      roundId: string,
+      currentHoles: Hole[],
+      holeIndex: number,
+      teamId: string,
+      score: Partial<HoleScore>,
+    ) => {
+      const updatedHoles = currentHoles.map((h, i) => {
+        if (i !== holeIndex) return h;
+        return {
+          ...h,
+          scores: {
+            ...h.scores,
+            [teamId]: { ...h.scores[teamId], ...score },
+          },
+        };
+      });
       const roundRef = doc(db, 'rounds', roundId);
-      const updates: Record<string, unknown> = {};
-      if (score.score !== undefined) {
-        updates[`holes.${holeIndex}.scores.${teamId}.score`] = score.score;
-      }
-      if (score.shotguns !== undefined) {
-        updates[`holes.${holeIndex}.scores.${teamId}.shotguns`] = score.shotguns;
-      }
-      await withTimeout(updateDoc(roundRef, updates));
+      await withTimeout(updateDoc(roundRef, { holes: updatedHoles }));
     },
     [],
   );
